@@ -22,4 +22,18 @@ def home():
 
 @app.route('/jot/<Id>', methods=["GET", "POST"])
 def notepad(Id):
-    return render_template("note.html")
+    if request.method == "GET":
+        document = db.reference('/jots/' + Id).get()
+        return render_template("note.html", Id = Id, document = document)
+    else:
+        document = request.get_json(force=True)
+        db.reference('/jots/' + Id).set(document)
+        return jsonify({"Message": "Success"})
+
+@app.route('/doc/<Id>', methods=["GET"])
+def getNote(Id):
+    document = db.reference('/jots/' + Id).get()
+    if document:
+        return jsonify({"document": document})
+    else:
+        return jsonify({"document": False})
