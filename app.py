@@ -15,4 +15,4 @@ def home():
 
 @app.route('/jot/<Id>', methods=["GET", "POST"])
 def notepad(Id):
-    return Id
+    return render_template("note.html")
