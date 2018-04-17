@@ -5,6 +5,7 @@ from flask import jsonify
 from firebase_admin import initialize_app
 from firebase_admin import db
 from firebase_admin import credentials
+from richtextpy import Delta
 import config
 
 app = Flask(__name__)
@@ -26,9 +27,23 @@ def notepad(Id):
         document = db.reference('/jots/' + Id).get()
         return render_template("note.html", Id = Id, document = document)
     else:
-        document = request.get_json(force=True)
-        db.reference('/jots/' + Id).set(document)
-        return jsonify({"Message": "Success"})
+        payload = request.get_json(force=True)
+        document = db.reference('/jots/' + Id).get()
+        if document:
+            oldDoc = Delta(document['ops'])
+            change = Delta(payload['ops'])
+            print oldDoc.get_ops()
+            print change.get_ops()
+            composed = oldDoc.compose(change)
+            print composed.get_ops()
+            newDoc = {
+                "ops": composed.get_ops()
+            }
+            db.reference('/jots/' + Id).set(newDoc)
+            return jsonify({"Message": "Success"})
+        else:
+            db.reference('/jots/' + Id).set(payload)
+            return jsonify({"Message": "Success"})
 
 @app.route('/doc/<Id>', methods=["GET"])
 def getNote(Id):
