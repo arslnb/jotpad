@@ -1,3 +1,4 @@
+var socket = io();
 var Delta = Quill.import('delta');
 var quill = new Quill('#editor', {
     theme: 'snow',
@@ -14,17 +15,14 @@ $(document).ready(function() {
     })
 })
 
+socket.on('update', function(data){
+    quill.updateContents(data.data, "silent")
+});   
+
 quill.on('text-change', function(delta) {
-    var xhr = new XMLHttpRequest();
     var Id = document.getElementsByClassName("editor-holder")[0].attributes.id.value;
-    var url = "/jot/" + Id;
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var json = JSON.parse(xhr.responseText);
-        }
-    };
-    var data = JSON.stringify(delta);
-    xhr.send(data);
+    socket.emit('modify', {
+        "Id": Id,
+        "delta": delta
+    })
 });
