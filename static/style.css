@@ -1,3 +1,7 @@
+body{
+    background: #ecf0f1
+}
+
 .button-holder{
     max-width: 330px;
     margin: 0 auto;
@@ -72,4 +76,12 @@
 	background-image:-ms-linear-gradient(top, #D25068, #F66C7B);
 	background-image:-o-linear-gradient(top, #D25068, #F66C7B);
 	background-image:linear-gradient(top, #D25068, #F66C7B);
+}
+
+
+.editor-holder{
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 7%;
+    background: #FAfafa;
 }
