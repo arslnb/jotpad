@@ -7,6 +7,7 @@ from firebase_admin import db
 from firebase_admin import credentials
 from richtextpy import Delta
 from flask_socketio import SocketIO, emit
+from flask_socketio import join_room
 import config
 
 app = Flask(__name__)
@@ -36,6 +37,10 @@ def getNote(Id):
     else:
         return jsonify({"document": False})
 
+@sio.on('join')
+def new_user(data):
+    join_room(data)
+
 @sio.on('modify')
 def modify_notepad(data):
     Id = data['Id']
@@ -50,11 +55,11 @@ def modify_notepad(data):
         }
         db.reference('/jots/' + Id).set(newDoc)
         emit('update', {'data': payload['ops'], 'author': request.sid}, 
-            include_self = False, broadcast=True)
+            include_self = False, room=Id)
     else:
         db.reference('/jots/' + Id).set(payload)
         emit('update', {'data': payload['ops'], 'author': request.sid}, 
-            include_self = False, broadcast=True)
+            include_self = False, room=Id)
 
 if __name__ == '__main__':
     app = socketio.Middleware(sio, app)

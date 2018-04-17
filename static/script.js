@@ -1,4 +1,6 @@
 var socket = io();
+socket.emit('join', document.getElementsByClassName("editor-holder")[0].attributes.id.value);
+
 var Delta = Quill.import('delta');
 var quill = new Quill('#editor', {
     theme: 'snow',
