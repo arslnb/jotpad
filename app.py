@@ -45,7 +45,6 @@ def new_user(data):
 def modify_notepad(data):
     Id = data['Id']
     payload = data['delta']
-    print data
     document = db.reference('/jots/' + Id).get()
     if document:
         oldDoc = Delta(document['ops'])

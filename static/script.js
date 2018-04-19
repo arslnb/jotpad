@@ -19,7 +19,6 @@ $(document).ready(function() {
 })
 
 otClient.applyDelta = function(delta) {
-    console.log('here')
     quill.updateContents(delta, 'silent');
 }
 
@@ -34,12 +33,12 @@ otClient.sendDelta = function(version, delta) {
 socket.on('update', function(delta){
     if(delta.author == socket.id){
         otClient.serverAck()
+    } else {
+        otClient.applyFromServer(delta.data);
     }
-    otClient.applyFromServer(delta.data);
 });   
 
 quill.on('text-change', function(delta, oldDelta, source) {
-    console.log('done')
     if (source === 'user') {
         otClient.applyFromClient(delta);
     } 
