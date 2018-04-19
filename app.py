@@ -45,6 +45,7 @@ def new_user(data):
 def modify_notepad(data):
     Id = data['Id']
     payload = data['delta']
+    print data
     document = db.reference('/jots/' + Id).get()
     if document:
         oldDoc = Delta(document['ops'])
@@ -54,12 +55,10 @@ def modify_notepad(data):
             "ops": composed.get_ops()
         }
         db.reference('/jots/' + Id).set(newDoc)
-        emit('update', {'data': payload['ops'], 'author': request.sid}, 
-            include_self = False, room=Id)
+        emit('update', {'data': payload['ops'], 'author': request.sid}, room=Id)
     else:
         db.reference('/jots/' + Id).set(payload)
-        emit('update', {'data': payload['ops'], 'author': request.sid}, 
-            include_self = False, room=Id)
+        emit('update', {'data': payload['ops'], 'author': request.sid}, room=Id)
 
 if __name__ == '__main__':
     app = socketio.Middleware(sio, app)
