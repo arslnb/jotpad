@@ -2,10 +2,24 @@ var socket = io();
 socket.emit('join', document.getElementsByClassName("editor-holder")[0].attributes.id.value);
 var otClient = new ot.Client(0);
 
+var toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block'],
+    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+    ['clean'],                                     // remove formatting button,
+    ['formula']
+  ];
+
 var Delta = Quill.import('delta');
 var quill = new Quill('#editor', {
     theme: 'snow',
-    placeholder: 'Start typing here...'
+    placeholder: 'Start typing here...',
+    modules: {
+        formula: true,          // Include formula module
+        toolbar: toolbarOptions  // Include button in toolbar
+    }
 });
 
 $(document).ready(function() {
