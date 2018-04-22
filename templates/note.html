@@ -13,8 +13,18 @@
     </head>
     <body>
         <div class="editor-holder" id="{{Id}}">
+            <div id="toolbar">
+                <!-- Add buttons as you would before -->
+                <button class="ql-bold">Bold</button>
+                <button class="ql-italic">Italic</button>
+                <button class="ql-formula">Formula</button>
+                
+                <!-- But you can also add your own -->
+                <button id="add-stack">Stack</button>
+            </div>
             <div id="editor"></div>
         </div>
+        <script src="/static/rich.js"></script>
         <script src="/static/script.js"></script>
     </body>
 </html>

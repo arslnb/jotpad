@@ -2,23 +2,13 @@ var socket = io();
 socket.emit('join', document.getElementsByClassName("editor-holder")[0].attributes.id.value);
 var otClient = new ot.Client(0);
 
-var toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block'],
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-    ['clean'],                                     // remove formatting button,
-    ['formula']
-  ];
-
 var Delta = Quill.import('delta');
 var quill = new Quill('#editor', {
     theme: 'snow',
     placeholder: 'Start typing here...',
     modules: {
         formula: true,          // Include formula module
-        toolbar: toolbarOptions  // Include button in toolbar
+        toolbar: '#toolbar'  // Include button in toolbar
     }
 });
 
@@ -38,6 +28,7 @@ otClient.applyDelta = function(delta) {
 
 otClient.sendDelta = function(version, delta) {
     var Id = document.getElementsByClassName("editor-holder")[0].attributes.id.value;
+    console.log(delta)
     socket.emit('modify', {
         "Id": Id,
         "delta": delta
@@ -53,7 +44,19 @@ socket.on('update', function(delta){
 });   
 
 quill.on('text-change', function(delta, oldDelta, source) {
+    console.log('text-changed')
+    console.log(source)
     if (source === 'user') {
         otClient.applyFromClient(delta);
     } 
+});
+
+$('#add-stack').click(function() {
+    let stackId = prompt('Enter stack Id');
+    let stackType = prompt('Enter stack type');
+    let data = {
+        'stackid': stackId,
+        'stacktype': stackType
+    }
+    quill.format('stack', data, 'user');
 });
