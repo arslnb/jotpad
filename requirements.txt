@@ -8,6 +8,7 @@ enum34==1.1.6
 eventlet==0.22.1
 firebase-admin==2.10.0
 Flask==0.12.2
+Flask-SocketIO==2.9.6
 futures==3.2.0
 google-api-core==1.1.0
 google-auth==1.4.1
@@ -26,6 +27,8 @@ netifaces==0.10.6
 protobuf==3.5.2.post1
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
+python-engineio==2.0.4
+python-socketio==1.9.0
 pytz==2018.4
 requests==2.18.4
 richtextpy==0.2

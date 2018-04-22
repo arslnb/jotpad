@@ -46,7 +46,6 @@ def modify_notepad(data):
     Id = data['Id']
     payload = data['delta']
     document = db.reference('/jots/' + Id).get()
-    print payload
     if document:
         oldDoc = Delta(document['ops'])
         change = Delta(payload['ops'])

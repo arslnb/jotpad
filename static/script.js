@@ -28,7 +28,6 @@ otClient.applyDelta = function(delta) {
 
 otClient.sendDelta = function(version, delta) {
     var Id = document.getElementsByClassName("editor-holder")[0].attributes.id.value;
-    console.log(delta)
     socket.emit('modify', {
         "Id": Id,
         "delta": delta
@@ -44,8 +43,6 @@ socket.on('update', function(delta){
 });   
 
 quill.on('text-change', function(delta, oldDelta, source) {
-    console.log('text-changed')
-    console.log(source)
     if (source === 'user') {
         otClient.applyFromClient(delta);
     } 
