@@ -32,7 +32,7 @@ python-socketio==1.9.0
 pytz==2018.4
 requests==2.18.4
 richtextpy==0.2
-rsa==3.4.2
+rsa==4.1
 six==1.11.0
 socketio==0.0.7
 urllib3==1.22
