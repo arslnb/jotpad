@@ -5,7 +5,7 @@ chardet==3.0.4
 click==6.7
 diff-match-patch==20121119
 enum34==1.1.6
-eventlet==0.22.1
+eventlet==0.31.0
 firebase-admin==2.10.0
 Flask==0.12.2
 Flask-SocketIO==2.9.6
