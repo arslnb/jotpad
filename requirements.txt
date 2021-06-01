@@ -35,5 +35,5 @@ richtextpy==0.2
 rsa==3.4.2
 six==1.11.0
 socketio==0.0.7
-urllib3==1.22
+urllib3==1.26.5
 Werkzeug==0.14.1
